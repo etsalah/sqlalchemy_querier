@@ -13,7 +13,7 @@ SUPPORTED_QUERY_OPERATORS = (
 )
 
 
-def _query(
+def query(
         session_obj: SessionType, model_cls,
         params: List[Dict], pagination_args: Dict):
     """This function is responsible for returning a filter list of model
@@ -40,10 +40,10 @@ def _query(
         record_set = _apply_query_param(model_cls, record_set, param)
     record_set = _query_sort(
         model_cls, record_set, pagination_args.get("sort", []))
-    return _query_limit(record_set, pagination_args)
+    return query_limit(record_set, pagination_args)
 
 
-def _query_limit(record_set, pagination_args: Dict = None):
+def query_limit(record_set, pagination_args: Dict = None):
     """This function applies the pagination arguments to the record set that is
     passed to it
 
@@ -174,7 +174,7 @@ def _apply_query_param(model_cls, record_set, params: Dict) -> bool:
                     getattr(model_cls, field).in_(operator_value))
 
 
-def _count(session_obj: SessionType, model_cls, params: List[Dict]=None):
+def count(session_obj: SessionType, model_cls, params: List[Dict]=None):
     """This function is responsible for returning the number of instances of a 
     model match a list of filter parameters
 
@@ -189,7 +189,7 @@ def _count(session_obj: SessionType, model_cls, params: List[Dict]=None):
     ----------
     dictionary representing the count of the instances that matched params
     """
-    result = _query(session_obj, model_cls, params, {})
+    result = query(session_obj, model_cls, params, {})
 
     count_ = 0
     if result:
