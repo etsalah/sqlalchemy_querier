@@ -4,3 +4,4 @@
 sdist
 dist
 .venv
+sqlalchemy_query_helper.egg-info
